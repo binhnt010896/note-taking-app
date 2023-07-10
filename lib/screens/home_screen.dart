@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:note_taking_app/controllers/auth_controller.dart';
 import 'package:note_taking_app/controllers/note_list_controller.dart';
 import 'package:note_taking_app/routes.dart';
 import 'package:note_taking_app/widgets/note_list_item.dart';
@@ -12,6 +13,28 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Note Taking App'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: GetBuilder<AuthController>(
+              init: AuthController(),
+              builder: (controller) {
+                if (controller.isAuth.isFalse) {
+                  return TextButton(
+                    onPressed: () => Get.toNamed(RouteNames.LOGIN_SCREEN),
+                    child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 18)),
+                  );
+                }
+                return IconButton(
+                  onPressed: () {
+
+                  },
+                  icon: Icon(Icons.verified_user, color: Colors.white),
+                );
+              },
+            ),
+          )
+        ],
       ),
       body: Center(
         child: GetBuilder<NoteListController>(

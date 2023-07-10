@@ -4,7 +4,26 @@ import 'package:uuid/uuid.dart';
 
 class SupabaseService {
   final supabase = Supabase.instance.client;
+  /// AUTH
+  signUp(String email, String password) async {
+    return await supabase.auth.signUp(
+      email: email,
+      password: password,
+    ).onError((error, stackTrace) {
+      throw (error as AuthException).message;
+    });
+  }
 
+  login(String email, String password) async {
+    return await supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    ).onError((error, stackTrace) {
+      throw (error as AuthException).message;
+    });
+  }
+
+  /// NOTES
   Future<List<Map<String, dynamic>>> fetchNoteList() {
     return supabase
         .from('notes')

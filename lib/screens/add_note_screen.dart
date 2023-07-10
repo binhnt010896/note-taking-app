@@ -27,7 +27,7 @@ class CreateNoteScreen extends StatelessWidget {
               actions: [
                 TextButton(
                     onPressed: () {
-                      if (Get.arguments[ArgumentNames.IS_EDIT]) {
+                      if (Get.arguments?[ArgumentNames.IS_EDIT] ?? false) {
                         controller.updateNote(context);
                       } else {
                         controller.addNote(context);
