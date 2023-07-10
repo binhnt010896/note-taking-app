@@ -2,41 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as Quill;
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:get/get.dart';
-import 'package:note_taking_app/controllers/add_note_controller.dart';
+import 'package:note_taking_app/controllers/note_editing_controller.dart';
+import 'package:note_taking_app/controllers/note_list_controller.dart';
+import 'package:note_taking_app/routes.dart';
+import 'package:note_taking_app/widgets/title_editing_field.dart';
 
 class CreateNoteScreen extends StatelessWidget {
   const CreateNoteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AddNoteController>(
-      init: AddNoteController(),
+    NoteListController noteListController = Get.put(NoteListController());
+    return GetBuilder<NoteEditingController>(
+      init: NoteEditingController(),
       builder: (controller) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Add Note Screen'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    print(controller.quillController.document.toDelta().toJson());
-                  },
-                  child: Text('SAVE', style: TextStyle(color: Colors.white, fontSize: 16))
-              )
-            ],
-          ),
-          body: Column(
-            children: [
-              Quill.QuillToolbar.basic(
-                controller: controller.quillController,
-                embedButtons: FlutterQuillEmbeds.buttons(),
-              ),
-              Expanded(
-                child: Quill.QuillEditor.basic(
+        return WillPopScope(
+          onWillPop: () async {
+            noteListController.getNotes();
+            return true;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: TitleEditingField(),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      if (Get.arguments[ArgumentNames.IS_EDIT]) {
+                        controller.updateNote(context);
+                      } else {
+                        controller.addNote(context);
+                      }
+                    },
+                    child: const Text('SAVE', style: TextStyle(color: Colors.white, fontSize: 16))
+                )
+              ],
+            ),
+            body: Column(
+              children: [
+                Quill.QuillToolbar.basic(
                   controller: controller.quillController,
-                  readOnly: false,
+                  embedButtons: FlutterQuillEmbeds.buttons(),
                 ),
-              )
-            ],
+                Expanded(
+                  child: Quill.QuillEditor.basic(
+                    controller: controller.quillController,
+                    readOnly: false,
+                  ),
+                )
+              ],
+            ),
           ),
         );
       }

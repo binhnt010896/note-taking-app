@@ -4,7 +4,11 @@ import 'package:note_taking_app/screens/home_screen.dart';
 
 class RouteNames {
   static const HOME_SCREEN = '/';
-  static const ADD_NEW_NOTE = '/add_new_note';
+  static const ADD_NEW_NOTE = '/add_edit';
+}
+
+class ArgumentNames {
+  static const IS_EDIT = 'is_edit';
 }
 
 var screenRoutes = [

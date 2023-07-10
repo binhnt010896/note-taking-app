@@ -3,7 +3,6 @@ import 'package:note_taking_app/models/note.dart';
 import 'package:note_taking_app/repositories/note_repository.dart';
 
 class NoteListController extends GetxController with StateMixin<List<Note>> {
-  Rx<Note?> currentlyEditingNote = null.obs;
   NoteRepository noteRepo = NoteRepository();
 
   @override
@@ -14,7 +13,6 @@ class NoteListController extends GetxController with StateMixin<List<Note>> {
   }
 
   /// Methods
-  setCurrentNote(Note newNote) => currentlyEditingNote(newNote);
   getNotes() {
     change(null, status: RxStatus.loading());
     noteRepo.fetchNoteList().then((notes) {

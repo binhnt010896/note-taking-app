@@ -10,4 +10,24 @@ class NoteRepository {
       return Note.fromJson(item);
     }).toList();
   }
+
+  Future<bool> addNoteToList(Note newNote) async {
+    try {
+      await supabaseService.addNewNote(newNote);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> updateNote(Note note) async {
+    try {
+      await supabaseService.updateNote(note);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

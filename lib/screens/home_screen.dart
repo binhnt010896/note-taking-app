@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:note_taking_app/controllers/note_list_controller.dart';
 import 'package:note_taking_app/routes.dart';
+import 'package:note_taking_app/widgets/note_list_item.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -20,11 +21,18 @@ class MyHomePage extends StatelessWidget {
               return const CircularProgressIndicator();
             }
             if (controller.status.isSuccess) {
-              return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: controller.state!.map((item) {
-                    return Text(item.title);
-                  }).toList());
+              return SizedBox(
+                width: Get.width,
+                height: Get.height - kToolbarHeight,
+                child: RefreshIndicator(
+                  onRefresh: () async => controller.getNotes(),
+                  child: ListView(
+                    children: controller.state!.map((item) {
+                      return NoteListItem(item: item);
+                    }).toList(),
+                  ),
+                ),
+              );
             }
             return const Text('Nothing here');
           },
@@ -32,7 +40,7 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(RouteNames.ADD_NEW_NOTE),
-        tooltip: 'Add note',
+        tooltip: 'Add Edit note',
         child: const Icon(Icons.add),
       ),
     );
