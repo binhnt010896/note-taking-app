@@ -55,6 +55,19 @@ class AuthController extends GetxController with StateMixin {
     }
   }
 
+  signOut(context) async {
+    change(null, status: RxStatus.loading());
+    try {
+      await supabase.auth.signOut();
+      change(null, status: RxStatus.success());
+      Get.back();
+      isAuth(false);
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+      showSnackBar(context, text: e.toString(), snackBarType: SnackBarType.error);
+    }
+  }
+
   navigateToSignUp() {
     isLoginScreen(false);
     update();

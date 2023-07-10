@@ -26,9 +26,7 @@ class MyHomePage extends StatelessWidget {
                   );
                 }
                 return IconButton(
-                  onPressed: () {
-
-                  },
+                  onPressed: () => Get.toNamed(RouteNames.PROFILE_SCREEN),
                   icon: Icon(Icons.verified_user, color: Colors.white),
                 );
               },
