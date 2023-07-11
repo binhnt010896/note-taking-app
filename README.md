@@ -16,6 +16,7 @@ This is the repo for a cool Note Taking App.
 
 ### Services
 - Supabase: I use Supabase as the Database and Backend system for my Note App. It helps me store, query and authenticate users.
+- flutter_quill: I use flutter_quill to enhance my note editing functions. The package provides the ability to edit rich text.
 
 ### Screenshots:
 <img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/8ee49b2e-7338-43c2-b913-fbe6e27c0a77" width="280">
