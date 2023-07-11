@@ -28,17 +28,23 @@ class SupabaseService {
     return supabase
         .from('notes')
         .select()
+        .eq('user_id', supabase.auth.currentUser?.id)
         .order('id', ascending: true)
         .select();
   }
 
-  Future<List<Map<String, dynamic>>> addNewNote(Note note) {
+  Future<List<Map<String, dynamic>>> addNewNote(List<Note> notes) {
     var uuid = const Uuid();
+    print('ahoho ${notes.map((note) => note.copyWith(
+        id: uuid.v1(),
+        userId: supabase.auth.currentUser?.id
+    ).toJSON()).toList()}');
     return supabase
         .from('notes')
-        .insert([note.copyWith(
-          id: uuid.v1()
-        ).toJSON()])
+        .insert(notes.map((note) => note.copyWith(
+          id: uuid.v1(),
+          userId: supabase.auth.currentUser?.id
+        ).toJSON()).toList())
         .select();
   }
 

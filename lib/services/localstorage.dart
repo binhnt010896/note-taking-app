@@ -54,6 +54,7 @@ class Storage {
 class LS {
   static const String USER = 'user';
   static const String SESSION = 'session';
+  static const String NOTES = 'notes';
 }
 
 final storage = Storage();

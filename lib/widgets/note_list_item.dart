@@ -4,6 +4,7 @@ import 'package:note_taking_app/controllers/note_editing_controller.dart';
 import 'package:note_taking_app/models/note.dart';
 import 'package:get/get.dart';
 import 'package:note_taking_app/routes.dart';
+import 'package:uuid/uuid.dart';
 
 class NoteListItem extends StatelessWidget {
   final Note item;
@@ -18,7 +19,7 @@ class NoteListItem extends StatelessWidget {
       trailing: const Icon(Icons.chevron_right_rounded, size: 36),
       onTap: () {
         noteEditingController.currentlyEditingNote(item);
-        noteEditingController.quillController.document = Quill.Document.fromJson(item.content ?? []);
+        noteEditingController.quillController.document = Quill.Document.fromJson(item.content ?? Note.emptyContent);
         noteEditingController.addDocumentListener();
         Get.toNamed(RouteNames.ADD_NEW_NOTE, arguments: {
           ArgumentNames.IS_EDIT: true

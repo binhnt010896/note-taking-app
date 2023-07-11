@@ -1,33 +1,42 @@
 class Note {
   final String? id;
   final String title;
+  final String? userId;
   final String? brief;
   final List? content;
+  final DateTime createdAt;
 
-  Note({this.id, required this.title, this.brief, this.content});
+  Note({this.id, required this.title, this.userId, this.brief, this.content, required this.createdAt});
 
   factory Note.fromJson(Map<String, dynamic> json) => Note(
-    id: json["id"] as String,
-    title: json["title"] as String,
+    id: json["id"] as String?,
+    title: json["title"] ?? 'Untitled',
     brief: json["brief"] as String?,
-    content: json["content"] as List?,
+    userId: json["user_id"] as String?,
+    content: json["content"] ?? emptyContent,
+    createdAt: DateTime.tryParse(json["created_at"] ?? '') ?? DateTime.now(),
   );
 
   Map<String, dynamic> toJSON() {
     return {
       'id': id,
       'title': title,
+      'user_id': userId,
       'brief': brief ?? '-',
-      'content': content ?? []
+      'content': content ?? Note.emptyContent,
     };
   }
 
-  Note copyWith({ String? id, String? title, String? brief, List<dynamic>? content }) {
+  Note copyWith({ String? id, String? title, String? brief, String? userId, List<dynamic>? content, DateTime? createdAt }) {
     return Note(
       id: id ?? this.id,
       title: title ?? this.title,
+      userId: userId ?? this.userId,
       brief: brief ?? this.brief,
       content: content ?? this.content,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
+
+  static const emptyContent = [{'insert': '\n'}];
 }

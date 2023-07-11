@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:note_taking_app/helpers/popups.dart';
+import 'package:note_taking_app/models/note.dart';
 import 'package:note_taking_app/repositories/auth_repository.dart';
+import 'package:note_taking_app/repositories/note_repository.dart';
 import 'package:note_taking_app/services/localstorage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -9,6 +13,7 @@ import '../helpers/validator.dart';
 
 class AuthController extends GetxController with StateMixin {
   final AuthRepository authRepository = AuthRepository();
+  final NoteRepository noteRepository = NoteRepository();
   final supabase = Supabase.instance.client;
 
   TextEditingController emailController = TextEditingController();
@@ -34,6 +39,8 @@ class AuthController extends GetxController with StateMixin {
       authRepository.signUp(emailController.text, passwordController.text);
       change(null, status: RxStatus.success());
       isAuth(true);
+      clearInputFields();
+      uploadNotesToCloud();
       Get.back();
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
@@ -48,6 +55,8 @@ class AuthController extends GetxController with StateMixin {
       await authRepository.login(emailController.text, passwordController.text);
       change(null, status: RxStatus.success());
       isAuth(true);
+      clearInputFields();
+      uploadNotesToCloud();
       Get.back();
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
@@ -58,14 +67,31 @@ class AuthController extends GetxController with StateMixin {
   signOut(context) async {
     change(null, status: RxStatus.loading());
     try {
+      Get.back();
       await supabase.auth.signOut();
       change(null, status: RxStatus.success());
-      Get.back();
+      clearInputFields();
       isAuth(false);
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
       showSnackBar(context, text: e.toString(), snackBarType: SnackBarType.error);
     }
+  }
+
+  uploadNotesToCloud() {
+    String storageNotes = storage.getString(LS.NOTES);
+    if (storageNotes.isNotEmpty) {
+      noteRepository.addNoteToList(
+        (json.decode(storageNotes) as List).map((note) => Note.fromJson(note)).toList()
+      );
+      storage.remove(LS.NOTES);
+    }
+  }
+
+  clearInputFields() {
+    emailController.clear();
+    passwordController.clear();
+    passwordConfirmController.clear();
   }
 
   navigateToSignUp() {

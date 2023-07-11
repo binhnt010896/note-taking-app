@@ -7,7 +7,11 @@ import 'package:note_taking_app/repositories/note_repository.dart';
 
 class NoteEditingController extends GetxController with StateMixin {
   QuillController quillController = QuillController.basic();
-  Rx<Note> currentlyEditingNote = Note(title: 'Untitled').obs;
+  Rx<Note> currentlyEditingNote = Note(
+    title: 'Untitled',
+    content: Note.emptyContent,
+    createdAt: DateTime.now()
+  ).obs;
   var isDirty = false.obs;
   RxStatus addEditStatus = RxStatus.empty();
   NoteRepository noteRepo = NoteRepository();
@@ -39,15 +43,15 @@ class NoteEditingController extends GetxController with StateMixin {
   /// CRUD
   Future<void> addNote(context) async {
     change(null, status: RxStatus.loading());
-    bool isSuccess = await noteRepo.addNoteToList(currentlyEditingNote.value);
+    bool isSuccess = await noteRepo.addNoteToList([currentlyEditingNote.value]);
     if (isSuccess) {
       change(null, status: RxStatus.success());
-      showSnackBar(context, text: 'Note uploaded to cloud successfully!');
+      showSnackBar(context, text: 'Note added successfully!');
       Get.back();
       noteListController.getNotes();
     } else {
       change(null, status: RxStatus.error());
-      showSnackBar(context, text: 'Fail to upload your note to cloud!', snackBarType: SnackBarType.error);
+      showSnackBar(context, text: 'Fail to add your note!', snackBarType: SnackBarType.error);
     }
   }
 
@@ -56,12 +60,12 @@ class NoteEditingController extends GetxController with StateMixin {
     bool isSuccess = await noteRepo.updateNote(currentlyEditingNote.value);
     if (isSuccess) {
       change(null, status: RxStatus.success());
-      showSnackBar(context, text: 'Note updated to cloud successfully!');
+      showSnackBar(context, text: 'Note updated successfully!');
       Get.back();
       noteListController.getNotes();
     } else {
       change(null, status: RxStatus.error());
-      showSnackBar(context, text: 'Fail to update your note to cloud!', snackBarType: SnackBarType.error);
+      showSnackBar(context, text: 'Fail to update your note!', snackBarType: SnackBarType.error);
     }
   }
 }

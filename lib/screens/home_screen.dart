@@ -10,6 +10,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NoteListController noteListController = Get.put(NoteListController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Note Taking App'),
@@ -21,12 +22,16 @@ class MyHomePage extends StatelessWidget {
               builder: (controller) {
                 if (controller.isAuth.isFalse) {
                   return TextButton(
-                    onPressed: () => Get.toNamed(RouteNames.LOGIN_SCREEN),
-                    child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 18)),
+                    onPressed: () => Get.toNamed(RouteNames.LOGIN_SCREEN)?.then((_) {
+                      noteListController.getNotes();
+                    }),
+                    child: const Text('Login', style: TextStyle(color: Colors.white, fontSize: 18)),
                   );
                 }
                 return IconButton(
-                  onPressed: () => Get.toNamed(RouteNames.PROFILE_SCREEN),
+                  onPressed: () => Get.toNamed(RouteNames.PROFILE_SCREEN)?.then((_) {
+                    noteListController.getNotes();
+                  }),
                   icon: Icon(Icons.verified_user, color: Colors.white),
                 );
               },
