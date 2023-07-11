@@ -32,16 +32,17 @@ class AuthController extends GetxController with StateMixin {
     change(null, status: RxStatus.empty());
   }
 
-  signUp(context) {
+  signUp(context) async {
     change(null, status: RxStatus.loading());
     try {
       validateSignup(emailController.text, passwordController.text, passwordConfirmController.text);
-      authRepository.signUp(emailController.text, passwordController.text);
+      await authRepository.signUp(emailController.text, passwordController.text);
       change(null, status: RxStatus.success());
       isAuth(true);
       clearInputFields();
-      uploadNotesToCloud();
-      Get.back();
+      uploadNotesToCloud().then((_) {
+        Get.back();
+      });
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
       showSnackBar(context, text: e.toString(), snackBarType: SnackBarType.error);
@@ -56,8 +57,9 @@ class AuthController extends GetxController with StateMixin {
       change(null, status: RxStatus.success());
       isAuth(true);
       clearInputFields();
-      uploadNotesToCloud();
-      Get.back();
+      uploadNotesToCloud().then((_) {
+        Get.back();
+      });
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
       showSnackBar(context, text: e.toString(), snackBarType: SnackBarType.error);
@@ -78,10 +80,10 @@ class AuthController extends GetxController with StateMixin {
     }
   }
 
-  uploadNotesToCloud() {
+  Future uploadNotesToCloud() async {
     String storageNotes = storage.getString(LS.NOTES);
     if (storageNotes.isNotEmpty) {
-      noteRepository.addNoteToList(
+      await noteRepository.addNoteToList(
         (json.decode(storageNotes) as List).map((note) => Note.fromJson(note)).toList()
       );
       storage.remove(LS.NOTES);

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:note_taking_app/controllers/auth_controller.dart';
 import 'package:note_taking_app/controllers/note_list_controller.dart';
 import 'package:note_taking_app/routes.dart';
+import 'package:note_taking_app/services/localstorage.dart';
 import 'package:note_taking_app/widgets/note_list_item.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -25,14 +26,14 @@ class MyHomePage extends StatelessWidget {
                     onPressed: () => Get.toNamed(RouteNames.LOGIN_SCREEN)?.then((_) {
                       noteListController.getNotes();
                     }),
-                    child: const Text('Login', style: TextStyle(color: Colors.white, fontSize: 18)),
+                    child: Text('Login', style: TextStyle(color: Colors.white, fontSize: 18)),
                   );
                 }
                 return IconButton(
                   onPressed: () => Get.toNamed(RouteNames.PROFILE_SCREEN)?.then((_) {
                     noteListController.getNotes();
                   }),
-                  icon: const Icon(Icons.verified_user, color: Colors.white),
+                  icon: Icon(Icons.verified_user, color: Colors.white),
                 );
               },
             ),

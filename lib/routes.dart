@@ -13,6 +13,7 @@ class RouteNames {
 
 class ArgumentNames {
   static const IS_EDIT = 'is_edit';
+  static const CONTROLLER = 'controller';
 }
 
 var screenRoutes = [

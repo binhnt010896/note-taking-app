@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthRepository {
   var supabaseService = SupabaseService();
 
-  signUp(String email, String password) async {
+  Future signUp(String email, String password) async {
     try {
       AuthResponse response = await supabaseService.signUp(email, password);
       User? user = response.user;

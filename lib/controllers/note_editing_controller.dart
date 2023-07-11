@@ -12,7 +12,6 @@ class NoteEditingController extends GetxController with StateMixin {
     content: Note.emptyContent,
     createdAt: DateTime.now()
   ).obs;
-  var isDirty = false.obs;
   RxStatus addEditStatus = RxStatus.empty();
   NoteRepository noteRepo = NoteRepository();
   NoteListController noteListController = Get.put(NoteListController());
@@ -46,6 +45,7 @@ class NoteEditingController extends GetxController with StateMixin {
     bool isSuccess = await noteRepo.addNoteToList([currentlyEditingNote.value]);
     if (isSuccess) {
       change(null, status: RxStatus.success());
+      resetEditingNote();
       showSnackBar(context, text: 'Note added successfully!');
       Get.back();
       noteListController.getNotes();
@@ -60,6 +60,7 @@ class NoteEditingController extends GetxController with StateMixin {
     bool isSuccess = await noteRepo.updateNote(currentlyEditingNote.value);
     if (isSuccess) {
       change(null, status: RxStatus.success());
+      resetEditingNote();
       showSnackBar(context, text: 'Note updated successfully!');
       Get.back();
       noteListController.getNotes();
@@ -67,5 +68,14 @@ class NoteEditingController extends GetxController with StateMixin {
       change(null, status: RxStatus.error());
       showSnackBar(context, text: 'Fail to update your note!', snackBarType: SnackBarType.error);
     }
+  }
+
+  resetEditingNote() {
+    currentlyEditingNote(Note(
+        title: 'Untitled',
+        content: Note.emptyContent,
+        createdAt: DateTime.now()
+    ));
+    quillController = QuillController.basic();
   }
 }

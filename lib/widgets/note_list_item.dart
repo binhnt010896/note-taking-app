@@ -21,7 +21,8 @@ class NoteListItem extends StatelessWidget {
         noteEditingController.quillController.document = Quill.Document.fromJson(item.content ?? Note.emptyContent);
         noteEditingController.addDocumentListener();
         Get.toNamed(RouteNames.ADD_NEW_NOTE, arguments: {
-          ArgumentNames.IS_EDIT: true
+          ArgumentNames.IS_EDIT: true,
+          ArgumentNames.CONTROLLER: noteEditingController
         });
       },
     );
