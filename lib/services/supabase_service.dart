@@ -35,10 +35,6 @@ class SupabaseService {
 
   Future<List<Map<String, dynamic>>> addNewNote(List<Note> notes) {
     var uuid = const Uuid();
-    print('ahoho ${notes.map((note) => note.copyWith(
-        id: uuid.v1(),
-        userId: supabase.auth.currentUser?.id
-    ).toJSON()).toList()}');
     return supabase
         .from('notes')
         .insert(notes.map((note) => note.copyWith(

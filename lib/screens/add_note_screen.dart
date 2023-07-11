@@ -23,7 +23,7 @@ class CreateNoteScreen extends StatelessWidget {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: TitleEditingField(),
+              title: const TitleEditingField(),
               actions: [
                 TextButton(
                     onPressed: () {

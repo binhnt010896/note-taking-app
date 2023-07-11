@@ -23,7 +23,7 @@ class AuthRepository {
 
   login(String email, String password) async {
     try {
-      AuthResponse response = await supabaseService.login(email, password);
+      await supabaseService.login(email, password);
     } catch (e) {
       rethrow;
     }

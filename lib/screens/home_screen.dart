@@ -32,7 +32,7 @@ class MyHomePage extends StatelessWidget {
                   onPressed: () => Get.toNamed(RouteNames.PROFILE_SCREEN)?.then((_) {
                     noteListController.getNotes();
                   }),
-                  icon: Icon(Icons.verified_user, color: Colors.white),
+                  icon: const Icon(Icons.verified_user, color: Colors.white),
                 );
               },
             ),

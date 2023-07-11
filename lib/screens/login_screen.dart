@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:note_taking_app/controllers/auth_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -63,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                       : Text(controller.isLoginScreen.isFalse ? 'Sign Up' : 'Login'),
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text.rich(
                   TextSpan(
                       children: [
@@ -74,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                           text: controller.isLoginScreen.isFalse
                               ? 'Login now!'
                               : 'Sign up for one!',
-                          style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                          style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               if (controller.isLoginScreen.isFalse ) {

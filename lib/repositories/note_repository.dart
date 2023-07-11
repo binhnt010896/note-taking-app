@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:note_taking_app/models/note.dart';
 import 'package:note_taking_app/services/localstorage.dart';
 import 'package:note_taking_app/services/supabase_service.dart';
@@ -46,7 +47,9 @@ class NoteRepository {
       }
       return true;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }
@@ -71,7 +74,9 @@ class NoteRepository {
       }
       return true;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }

@@ -4,7 +4,6 @@ import 'package:note_taking_app/controllers/note_editing_controller.dart';
 import 'package:note_taking_app/models/note.dart';
 import 'package:get/get.dart';
 import 'package:note_taking_app/routes.dart';
-import 'package:uuid/uuid.dart';
 
 class NoteListItem extends StatelessWidget {
   final Note item;
