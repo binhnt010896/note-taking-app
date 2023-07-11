@@ -1,16 +1,27 @@
-# note_taking_app
+# Note Taking App
 
-A Cool Note Taking App
+This is the repo for a cool Note Taking App.
+### Features:
+- Authentication
+  - Login with Email/Password
+  - Sign up with Email/Password
+  - View profile
+  - Sign out
+- Notes
+  - Add a new note
+  - Update existing note
+  - Save note to local storage (if user has not signed in)
+  - Save note to cloud (if user has signed in)
+  - Upload local storage notes to cloud when user sign in/ sign up
 
-## Getting Started
+### Services
+- Supabase: I use Supabase as the Database and Backend system for my Note App. It helps me store, query and authenticate users.
+- flutter_quill: I use flutter_quill to enhance my note editing functions. The package provides the ability to edit rich text.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshots:
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/8ee49b2e-7338-43c2-b913-fbe6e27c0a77" width="280">
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/4666b848-3e35-4e4c-a2be-93d9a039563a" width="280">
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/0e1b358d-8509-444f-a202-952eab38c119" width="280">
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/078fbcd6-3836-4e41-b86c-952fcefd3779" width="280">
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/1ec68f40-ad16-4b8f-aa93-75f83e331414" width="280">
+<img src="https://github.com/binhnt010896/note-taking-app/assets/110758393/fee06dbd-4994-401e-bc49-5df5e7a02375" width="280">
